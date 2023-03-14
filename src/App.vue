@@ -7,8 +7,7 @@
         API</p>
     </div>
     <div class="flex flex-row justify-between w-2/3 mx-auto">
-      <input v-model="searchQuery" ref="mapInputSearch"
-        class="p-2 w-1/2 border shadow bg-white rounded-xl focus:ring-orange-400" type="text"
+      <input ref="mapInputSearch" class="p-2 w-1/2 border shadow bg-white rounded-xl focus:ring-orange-400" type="text"
         placeholder="Search place here">
       <button ref="mapLocationButton" @click="loadCurrentLocation()"
         class="p-2 bg-white rounded-xl border hover:bg-gray-100 shadow">Get My
@@ -34,7 +33,6 @@ export default {
         lat: -6.2440488,
         lng: 106.8862587,
       },
-      searchQuery: null
     }
   },
   created() {
@@ -100,16 +98,15 @@ export default {
           }
 
           // Create a marker for each place.
-          window.setTimeout(() => {
-            markers.push(
-              new google.maps.Marker({
-                map,
-                title: place.name,
-                position: place.geometry.location,
-                animation: google.maps.Animation.DROP
-              })
-            );
-          }, index * 100);
+          // window.setTimeout(() => {
+          markers.push(
+            new google.maps.Marker({
+              map,
+              title: place.name,
+              position: place.geometry.location,
+            })
+          );
+          // }, index * 100);
 
           if (place.geometry.viewport) {
             // Only geocodes have viewport.
@@ -118,10 +115,11 @@ export default {
             bounds.extend(place.geometry.location);
           }
         });
-        console.log(places);
+        console.log(markers);
 
         markers.forEach((marker) => {
           marker.addListener("click", () => {
+            console.log("test");
             infoWindow.close();
             infoWindow.setContent(marker.getTitle());
             infoWindow.open(marker.getMap(), marker);
